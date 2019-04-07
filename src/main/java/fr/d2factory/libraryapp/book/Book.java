@@ -1,16 +1,17 @@
 package fr.d2factory.libraryapp.book;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * A simple representation of a book
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
-    String title;
-    String author;
-    ISBN isbn;
-
-    public Book(String title, String author, ISBN isbn) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-    }
+    private String title;
+    private String author;
+    private ISBN isbn;
 }
