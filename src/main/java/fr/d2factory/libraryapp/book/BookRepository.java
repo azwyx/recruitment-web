@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class BookRepository {
     private Map<ISBN, Book> availableBooks = new HashMap<>();
     private Map<Book, LocalDate> borrowedBooks = new HashMap<>();
-    private Map<Member, Book> membersBorrowingBooks = new HashMap<>();
+    private Map<Member, Map<Book, LocalDate>> membersBorrowingBooks = new HashMap<>();
 
     public boolean addBooks(final List<Book> books) {
         if (!CollectionUtils.isEmpty(books)) {
@@ -29,14 +29,14 @@ public class BookRepository {
 
     public Book findBook(long isbnCode) {
 
-        for(ISBN isbn : availableBooks.keySet()){
-            if (isbn.getIsbnCode() == isbnCode){
+        for (ISBN isbn : availableBooks.keySet()) {
+            if (isbn.getIsbnCode() == isbnCode) {
                 return availableBooks.get(isbn);
             }
         }
 
-        for(Book book : borrowedBooks.keySet()){
-            if (book.getIsbn() != null && book.getIsbn().getIsbnCode() == isbnCode){
+        for (Book book : borrowedBooks.keySet()) {
+            if (book.getIsbn() != null && book.getIsbn().getIsbnCode() == isbnCode) {
                 return book;
             }
         }
@@ -46,17 +46,18 @@ public class BookRepository {
 
     public Book findAvailbaleBook(long isbnCode) {
 
-        for(ISBN isbn : availableBooks.keySet()){
-            if (isbn.getIsbnCode() == isbnCode){
+        for (ISBN isbn : availableBooks.keySet()) {
+            if (isbn.getIsbnCode() == isbnCode) {
                 return availableBooks.get(isbn);
             }
         }
         return null;
     }
 
-    public void saveBookBorrow(Book book, LocalDate borrowedAt) {
-        availableBooks.remove(book.getIsbn());
-        borrowedBooks.put(book, borrowedAt);
+    public Book saveBookBorrow(Book borrowedBook, LocalDate borrowedAt) {
+        availableBooks.remove(borrowedBook.getIsbn());
+        borrowedBooks.put(borrowedBook, borrowedAt);
+        return borrowedBook;
     }
 
     public Book saveBookReturning(Book book) {
@@ -68,28 +69,43 @@ public class BookRepository {
         return borrowedBooks.get(book);
     }
 
-    public List<Book> getAvailableBookList(){
+    public List<Book> getAvailableBookList() {
         return availableBooks.values().stream().collect(Collectors.toList());
     }
 
-    public List<Book> getBorrowedBookList(){
+    public List<Book> getBorrowedBookList() {
         return borrowedBooks.keySet().stream().collect(Collectors.toList());
     }
 
-    public List<Book> getBooksBorrowedByMember(final Member member){
-        Map<Member, Book> membersBooks = membersBorrowingBooks.entrySet().stream()
-                .filter(e -> e.getKey() == member)
+    public List<Book> getBooksBorrowedByMember(final Member member) {
+        Map<Book, LocalDate> books = new HashMap<>();
+        membersBorrowingBooks.entrySet().stream()
+                .filter(e -> {
+                    if (e.getKey() == member) {
+                        books.putAll(e.getValue());
+                        return true;
+                    }
+                    return false;
+                })
                 .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
 
-        return membersBooks.values().stream().collect(Collectors.toList());
-    }
-    public void saveMemberBorrowingTheBook(Member member, Book book, LocalDate date) {
-        saveBookBorrow(book, date);
-        membersBorrowingBooks.put(member, book);
+        return books.keySet().stream().collect(Collectors.toList());
     }
 
-    public void saveMemberReturningTheBook(Member member, Book book) {
-        saveBookReturning(book);
-        membersBorrowingBooks.put(member, book);
+    public Book saveMemberBorrowingTheBook(Member member, Book borrowedBook, LocalDate borrowAt) {
+        Map<Book, LocalDate> bookBorrowedAt = new HashMap<>();
+        bookBorrowedAt.put(borrowedBook, borrowAt);
+        if (membersBorrowingBooks.get(member) != null) {
+            membersBorrowingBooks.get(member).put(borrowedBook, borrowAt);
+        } else {
+            membersBorrowingBooks.put(member, bookBorrowedAt);
+        }
+        return saveBookBorrow(borrowedBook, borrowAt);
+    }
+
+    public Book saveMemberReturningTheBook(Member member, Book bookReturned) {
+        Map<Book, LocalDate> bookBorrowedAt = membersBorrowingBooks.get(member);
+        if (bookBorrowedAt != null) bookBorrowedAt.remove(bookReturned);
+        return saveBookReturning(bookReturned);
     }
 }
