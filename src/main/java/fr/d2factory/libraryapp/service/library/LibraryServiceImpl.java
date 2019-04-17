@@ -1,8 +1,11 @@
-package fr.d2factory.libraryapp.library;
+package fr.d2factory.libraryapp.service.library;
 
-import fr.d2factory.libraryapp.book.Book;
-import fr.d2factory.libraryapp.book.BookRepository;
-import fr.d2factory.libraryapp.member.Member;
+import fr.d2factory.libraryapp.entity.book.Book;
+import fr.d2factory.libraryapp.repository.BookRepository;
+import fr.d2factory.libraryapp.entity.member.Member;
+import fr.d2factory.libraryapp.service.library.exceptions.BookNotAvailableException;
+import fr.d2factory.libraryapp.service.library.exceptions.BookNotFoundException;
+import fr.d2factory.libraryapp.service.library.exceptions.HasLateBooksException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

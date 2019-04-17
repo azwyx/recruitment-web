@@ -2,7 +2,7 @@ package fr.d2factory.libraryapp.tools;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import fr.d2factory.libraryapp.book.Book;
+import fr.d2factory.libraryapp.entity.book.Book;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

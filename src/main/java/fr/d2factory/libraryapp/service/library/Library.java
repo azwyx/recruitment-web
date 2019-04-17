@@ -1,14 +1,17 @@
-package fr.d2factory.libraryapp.library;
+package fr.d2factory.libraryapp.service.library;
 
-import fr.d2factory.libraryapp.book.Book;
-import fr.d2factory.libraryapp.member.Member;
+import fr.d2factory.libraryapp.entity.book.Book;
+import fr.d2factory.libraryapp.repository.BookRepository;
+import fr.d2factory.libraryapp.entity.book.ISBN;
+import fr.d2factory.libraryapp.entity.member.Member;
+import fr.d2factory.libraryapp.service.library.exceptions.HasLateBooksException;
 
 import java.time.LocalDate;
 
 /**
  * The library class is in charge of stocking the books and managing the return delays and members
  * <p>
- * The books are available via the {@link fr.d2factory.libraryapp.book.BookRepository}
+ * The books are available via the {@link BookRepository}
  */
 public interface Library {
 
@@ -20,7 +23,7 @@ public interface Library {
      * @param borrowedAt the date when the book was borrowed
      * @return the book the member wishes to obtain if found
      * @throws HasLateBooksException in case the member has books that are late
-     * @see fr.d2factory.libraryapp.book.ISBN
+     * @see ISBN
      * @see Member
      */
     Book borrowBook(long isbnCode, Member member, LocalDate borrowAt) throws HasLateBooksException;

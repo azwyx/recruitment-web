@@ -1,6 +1,6 @@
-package fr.d2factory.libraryapp.member;
+package fr.d2factory.libraryapp.entity.member;
 
-import fr.d2factory.libraryapp.library.Library;
+import fr.d2factory.libraryapp.service.library.Library;
 import lombok.Data;
 
 /**

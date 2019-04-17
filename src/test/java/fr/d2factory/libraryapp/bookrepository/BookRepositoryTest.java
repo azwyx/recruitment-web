@@ -1,9 +1,9 @@
 package fr.d2factory.libraryapp.bookrepository;
 
-import fr.d2factory.libraryapp.book.Book;
-import fr.d2factory.libraryapp.book.BookRepository;
-import fr.d2factory.libraryapp.book.ISBN;
-import fr.d2factory.libraryapp.member.Student;
+import fr.d2factory.libraryapp.entity.book.Book;
+import fr.d2factory.libraryapp.repository.BookRepository;
+import fr.d2factory.libraryapp.entity.book.ISBN;
+import fr.d2factory.libraryapp.entity.member.Student;
 import fr.d2factory.libraryapp.tools.JsonToBooksConverter;
 import org.junit.Before;
 import org.junit.Test;

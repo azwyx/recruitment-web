@@ -1,6 +1,8 @@
-package fr.d2factory.libraryapp.book;
+package fr.d2factory.libraryapp.repository;
 
-import fr.d2factory.libraryapp.member.Member;
+import fr.d2factory.libraryapp.entity.book.Book;
+import fr.d2factory.libraryapp.entity.book.ISBN;
+import fr.d2factory.libraryapp.entity.member.Member;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;

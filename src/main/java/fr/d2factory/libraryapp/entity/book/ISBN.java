@@ -1,4 +1,4 @@
-package fr.d2factory.libraryapp.book;
+package fr.d2factory.libraryapp.entity.book;
 
 import lombok.Data;
 

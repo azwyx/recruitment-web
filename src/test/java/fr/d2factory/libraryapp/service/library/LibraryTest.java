@@ -1,13 +1,13 @@
-package fr.d2factory.libraryapp.library;
+package fr.d2factory.libraryapp.service.library;
 
-import fr.d2factory.libraryapp.book.Book;
-import fr.d2factory.libraryapp.book.BookRepository;
-/*import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;*/
-import fr.d2factory.libraryapp.book.ISBN;
-import fr.d2factory.libraryapp.member.Resident;
-import fr.d2factory.libraryapp.member.Student;
+import fr.d2factory.libraryapp.entity.book.Book;
+import fr.d2factory.libraryapp.repository.BookRepository;
+import fr.d2factory.libraryapp.entity.book.ISBN;
+import fr.d2factory.libraryapp.entity.member.Resident;
+import fr.d2factory.libraryapp.entity.member.Student;
+import fr.d2factory.libraryapp.service.library.exceptions.BookNotAvailableException;
+import fr.d2factory.libraryapp.service.library.exceptions.BookNotFoundException;
+import fr.d2factory.libraryapp.service.library.exceptions.HasLateBooksException;
 import fr.d2factory.libraryapp.tools.JsonToBooksConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
-import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
