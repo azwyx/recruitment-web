@@ -25,5 +25,7 @@ public abstract class Member {
      */
     public abstract void payBook(int numberOfDays);
 
+    public abstract int getLimitDate();
+
 
 }

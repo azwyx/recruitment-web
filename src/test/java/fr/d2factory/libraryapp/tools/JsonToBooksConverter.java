@@ -15,7 +15,8 @@ public class JsonToBooksConverter {
     public static List<Book> convertJsonFileToBookList() throws FileNotFoundException {
         Gson googleJson = new Gson();
         BufferedReader br = new BufferedReader(new FileReader("src/test/resources/books.json"));
-        Type type = new TypeToken<List<Book>>(){}.getType();
+        Type type = new TypeToken<List<Book>>() {
+        }.getType();
         List<Book> books = googleJson.fromJson(br, type);
         return books;
     }
